@@ -35,8 +35,8 @@
     <p>Sheets API Quickstart</p>
 
     <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+    <button id="authorize_button" class='button' onclick="handleAuthClick()">Authorize</button>
+    <button id="signout_button" class='button' onclick="handleSignoutClick()">Sign Out</button>
 
     <!-- Add Babylon Render Container -->
     <div id="renderContainer" style="display: none;">
@@ -125,7 +125,7 @@
 
           //Render Babylon
           document.getElementById('renderContainer').style.display = 'block';
-            initializeBabylonScene();
+          await initializeBabylonScene();
 
         };
 
