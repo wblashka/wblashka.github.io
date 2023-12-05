@@ -44,16 +44,10 @@
       let gisInited = false;
 
 
-      if (storedToken) {
-        gapi.client.setToken(JSON.parse(storedToken));
-        document.getElementById('authorize_button').style.visibility = 'visible';
-        document.getElementById('signout_button').style.visibility = 'visible';
-      } else {
-
-      /**
+            /**
        * Callback after api.js is loaded.
        */
-      function gapiLoaded() {
+       function gapiLoaded() {
         gapi.load('client', initializeGapiClient);
       }
 
@@ -69,6 +63,13 @@
         gapiInited = true;
         maybeEnableButtons();
       }
+
+      if (storedToken) {
+        gapi.client.setToken(JSON.parse(storedToken));
+        document.getElementById('authorize_button').style.visibility = 'visible';
+        document.getElementById('signout_button').style.visibility = 'visible';
+      } else {
+
 
       /**
        * Callback after Google Identity Services are loaded.
