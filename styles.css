@@ -1,0 +1,38 @@
+#renderContainer {
+    width: 100%;
+    height: 100vh; /* Use viewport height for full screen */
+    max-width: 800px; /* Adjust maximum width if needed */
+    margin: 0 auto; /* Center the container horizontally */
+    position: relative;
+}
+
+canvas {
+width: 100%;
+height: 100%;
+touch-action: none;
+}
+
+.button {
+background-color: #e7e7e7; /* Gray */
+border: none;
+color: black;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+}
+
+.button:hover {
+background-color: white;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
