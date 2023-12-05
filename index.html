@@ -209,8 +209,14 @@
             room.material.diffuseColor = new BABYLON.Color3(0, 0.5, 1); // Set room color
             */
 
-            var importedScene = BABYLON.SceneLoader.ImportMesh("","https://raw.githubusercontent.com/wblashka/wblashka.github.io/main/", "Living%20Room%20Lesson.glb", scene);
-            scene.addMesh(importedScene);
+            BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/wblashka/wblashka.github.io/main/", "Living%20Room%20Lesson.glb", scene, function (meshes) {
+            // The 'meshes' array contains the imported meshes
+            //console.log("GLB file loaded:", meshes);
+
+            // Loop through the imported meshes and add them to the scene
+                meshes.forEach(function (mesh) {
+                scene.addMesh(mesh);
+            });
 
             engine.runRenderLoop(function() {
                 scene.render();
