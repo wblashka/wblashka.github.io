@@ -11,6 +11,11 @@
     <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
     <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
+    <!-- Add Babylon Render Container -->
+    <div id="renderContainer" style="display: none;">
+        <canvas id="renderCanvas"></canvas>
+    </div>
+
     <pre id="content" style="white-space: pre-wrap;"></pre>
 
     <script type="text/javascript">
@@ -99,6 +104,11 @@
         } else {
           // Skip display of account chooser and consent dialog for an existing session.
           tokenClient.requestAccessToken({prompt: ''});
+
+          //Render Babylon
+          document.getElementById('renderContainer').style.display = 'block';
+            initializeBabylonScene();
+
         }
       }
 
@@ -143,8 +153,40 @@
             'Name, Major:\n');
         document.getElementById('content').innerText = output;
       }
+      /*
+      Babylon 3D Renderer
+      */
+      function initializeBabylonScene() {
+            var canvas = document.getElementById('renderCanvas');
+            var engine = new BABYLON.Engine(canvas, true);
+            var scene = new BABYLON.Scene(engine);
+
+            // Add a camera
+            var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 5, BABYLON.Vector3.Zero(), scene);
+            camera.attachControl(canvas, true);
+
+            // Create a light
+            var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+
+            // Create a simple room
+            var room = BABYLON.MeshBuilder.CreateBox("room", { size: 3 }, scene);
+            room.position.y = 1; // Adjust the room position
+            room.material = new BABYLON.StandardMaterial("roomMat", scene);
+            room.material.diffuseColor = new BABYLON.Color3(0, 0.5, 1); // Set room color
+
+
+            engine.runRenderLoop(function() {
+                scene.render();
+            });
+
+            window.addEventListener('resize', function() {
+                engine.resize();
+            });
+        }
+
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
   </body>
 </html>
