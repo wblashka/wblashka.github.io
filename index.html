@@ -45,6 +45,7 @@
 
 
       if (storedToken) {
+        gapi.client.setToken(JSON.parse(storedToken));
         document.getElementById('authorize_button').style.visibility = 'visible';
         document.getElementById('signout_button').style.visibility = 'visible';
       } else {
