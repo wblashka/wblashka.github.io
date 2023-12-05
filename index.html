@@ -4,6 +4,33 @@
     <title>Sheets API Quickstart</title>
     <meta charset="utf-8" />
   </head>
+  <style>
+    #renderContainer {
+            width: 100%;
+            height: 100vh; /* Use viewport height for full screen */
+            max-width: 800px; /* Adjust maximum width if needed */
+            margin: 0 auto; /* Center the container horizontally */
+            position: relative;
+        }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+    }
+
+    .button {
+        background-color: #04AA6D; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+  </style>
   <body>
     <p>Sheets API Quickstart</p>
 
@@ -94,7 +121,12 @@
           }
           document.getElementById('signout_button').style.visibility = 'visible';
           document.getElementById('authorize_button').innerText = 'Refresh';
-          await listMajors();
+          //await listMajors();
+
+          //Render Babylon
+          document.getElementById('renderContainer').style.display = 'block';
+            initializeBabylonScene();
+
         };
 
         if (gapi.client.getToken() === null) {
@@ -105,9 +137,6 @@
           // Skip display of account chooser and consent dialog for an existing session.
           tokenClient.requestAccessToken({prompt: ''});
 
-          //Render Babylon
-          document.getElementById('renderContainer').style.display = 'block';
-            initializeBabylonScene();
 
         }
       }
