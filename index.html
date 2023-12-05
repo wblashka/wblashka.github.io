@@ -25,6 +25,9 @@
       /* exported handleAuthClick */
       /* exported handleSignoutClick */
 
+      // Retrieve existing OAuth Token
+      const storedToken = localStorage.getItem('googleToken');
+
       // TODO(developer): Set to client ID and API key from the Developer Console
       const CLIENT_ID = '246393861229-cqsv6ialmho3jljo8np6ki5688nuivhv.apps.googleusercontent.com';
       const API_KEY = 'AIzaSyAbD4u4DVd_7RC1DDT1c3PnGnqefOhdmcY';
@@ -40,8 +43,11 @@
       let gapiInited = false;
       let gisInited = false;
 
-      document.getElementById('authorize_button').style.visibility = 'hidden';
-      document.getElementById('signout_button').style.visibility = 'hidden';
+
+      if (storedToken) {
+        document.getElementById('authorize_button').style.visibility = 'visible';
+        document.getElementById('signout_button').style.visibility = 'visible';
+      } else {
 
       /**
        * Callback after api.js is loaded.
@@ -99,6 +105,10 @@
 
           //Render Babylon
           document.getElementById('renderContainer').style.display = 'block';
+
+          // Store OAuth token locally
+          localStorage.setItem('googleToken', JSON.stringify(gapi.client.getToken()));
+
           await initializeBabylonScene();
 
         };
@@ -194,7 +204,7 @@
                 engine.resize();
             });
         }
-
+      };
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
