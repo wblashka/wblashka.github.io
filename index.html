@@ -69,6 +69,9 @@
         document.getElementById('authorize_button').style.visibility = 'visible';
         document.getElementById('signout_button').style.visibility = 'visible';
       } else {
+        document.getElementById('authorize_button').style.visibility = 'visible';
+        document.getElementById('signout_button').style.visibility = 'visible';
+      };
 
 
       /**
@@ -241,7 +244,7 @@
                 engine.resize();
             });
         }
-      };
+      
     </script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
