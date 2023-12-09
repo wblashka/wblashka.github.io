@@ -193,7 +193,42 @@
               function(meshes) {
                   // Process imported meshes
                   meshes.forEach(function(mesh) {
+                      // Add Each Mesh
                       scene.addMesh(mesh);
+
+                      // Make each mesh pickable
+                      mesh.isPickable = true;
+
+                      var original_mesh_material = mesh.material;
+
+                      // Add a highlight material
+                      var highlightMaterial = new BABYLON.StandardMaterial("highlightMaterial", scene);
+                      highlightMaterial.emissiveColor = BABYLON.Color3.Red(); // Change to your desired highlight color
+                      highlightMaterial.diffuseColor = BABYLON.Color3.Black(); // You can adjust this as needed
+
+                      // Event handler for mesh picking
+                      mesh.actionManager = new BABYLON.ActionManager(scene);
+                      mesh.actionManager.registerAction(
+                          new BABYLON.ExecuteCodeAction(
+                              BABYLON.ActionManager.OnPickTrigger,
+                              function (evt) {
+                                  // Get the picked mesh
+                                  var pickedMesh = evt.meshUnderPointer;
+
+                                  // If the mesh is valid and clickable
+                                  if (pickedMesh) {
+                                      // Highlight the mesh by applying the highlight material
+                                      pickedMesh.material = highlightMaterial;
+
+                                      // Reset the material after a certain time (e.g., 1 second)
+                                      setTimeout(function () {
+                                          pickedMesh.material = original_mesh_material;
+                                      }, 1000); // Adjust timing as needed
+                                  }
+                              }
+                          )
+                      );
+                      
                   });
               }
             );
