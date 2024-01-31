@@ -28,7 +28,8 @@ function processCSVData(csvData) {
     var columns = lines[0].split(',');
 
     var columnSelect = document.getElementById('columnSelect');
-    columnSelect.innerHTML = ''; // Clear existing options
+    columnSelect1.innerHTML = ''; // Clear existing options
+    columnSelect2.innerHTML = ''; // Clear existing options
 
     columns.forEach(function(column) {
         var option = document.createElement('option');
