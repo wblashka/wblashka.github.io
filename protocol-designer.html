@@ -7,7 +7,30 @@
 </head>
 <body>
     <h1>Protocol Designer</h1>
-    <p>Content for the Protocol Designer will go here.</p>
-    <button onclick="location.href='homepage.html'">Back to Homepage</button>
+    
+    <input type="file" id="csvFile" accept=".csv" />
+    <button onclick="loadCSV()">Load CSV</button>
+    <div id="columns"></div>
+
+    <div id="protocolBuilder">
+        <h2>Create Conditions</h2>
+        <select id="columnSelect1" onchange="setDefaultColumn2()"></select>
+        <select id="columnSelect2"></select>
+        <select id="conditionType">
+            <option value="match">Match</option>
+            <option value="mismatch">Mismatch</option>
+            <!-- Add more condition types as needed -->
+        </select>
+        <input type="text" id="conditionValue" placeholder="Condition Value">
+        <button onclick="addCondition()">Add Condition</button>
+
+        <h2>Condition Tree</h2>
+        <div id="conditionTree"></div>
+        <button onclick="addTreeNode('AND')">Add AND Node</button>
+        <button onclick="addTreeNode('OR')">Add OR Node</button>
+        <button onclick="saveProtocol()">Save Protocol</button>
+    </div>
+
+    <script src="protocol-designer-script.js"></script>
 </body>
 </html>
