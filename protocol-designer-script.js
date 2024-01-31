@@ -27,7 +27,8 @@ function processCSVData(csvData) {
     var lines = csvData.split('\n');
     var columns = lines[0].split(',');
 
-    var columnSelect = document.getElementById('columnSelect');
+    var columnSelect1 = document.getElementById('columnSelect1');
+    var columnSelect2 = document.getElementById('columnSelect2');
     columnSelect1.innerHTML = ''; // Clear existing options
     columnSelect2.innerHTML = ''; // Clear existing options
 
@@ -35,7 +36,8 @@ function processCSVData(csvData) {
         var option = document.createElement('option');
         option.value = column.trim();
         option.textContent = column.trim();
-        columnSelect.appendChild(option);
+        columnSelect1.appendChild(option);
+        columnSelect2.appendChild(option);
     });
 }
 
