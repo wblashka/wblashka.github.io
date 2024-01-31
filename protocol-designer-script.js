@@ -57,7 +57,7 @@ function addCondition() {
 
     var newCondition = {
         column1: columnSelect1.value,
-        column2: columnSelect2.value
+        column2: columnSelect2.value,
         type: conditionType.value,
         value: conditionValue.value.trim()
     };
