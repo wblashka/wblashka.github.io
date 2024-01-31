@@ -103,7 +103,7 @@
           }
           document.getElementById('signout_button').style.visibility = 'visible';
           document.getElementById('authorize_button').innerText = 'Refresh';
-          //await listMajors();
+          //await retrieveInventory();
 
           //Render Babylon
           document.getElementById('renderContainer').style.display = 'block';
@@ -145,7 +145,7 @@
        * Print the names and majors of students in a sample spreadsheet:
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
-      async function listMajors() {
+      async function retrieveInventory() {
         let response;
         try {
           // Fetch first 10 files
