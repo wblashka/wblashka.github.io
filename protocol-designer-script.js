@@ -33,11 +33,16 @@ function processCSVData(csvData) {
     columnSelect2.innerHTML = ''; // Clear existing options
 
     columns.forEach(function(column) {
-        var option = document.createElement('option');
-        option.value = column.trim();
-        option.textContent = column.trim();
-        columnSelect1.appendChild(option);
-        columnSelect2.appendChild(option);
+        var option1 = document.createElement('option');
+        option1.value = column.trim();
+        option1.textContent = column.trim();
+        columnSelect1.appendChild(option1);
+
+        var option2 = document.createElement('option');
+        option2.value = column.trim();
+        option2.textContent = column.trim();
+        columnSelect1.appendChild(option2);
+        columnSelect2.appendChild(option2);
     });
 }
 
