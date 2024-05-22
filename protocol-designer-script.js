@@ -58,7 +58,7 @@ function addCondition() {
     var conditionType = document.getElementById('conditionType');
     var conditionValue = document.getElementById('conditionValue');
 
-    if (!columnSelect.value || !conditionType.value || !conditionValue.value.trim()) {
+    if (!columnSelect1.value || !columnSelect2.value || !conditionType.value || !conditionValue.value.trim()) {
         alert("Please complete all fields to add a condition.");
         return;
     }
