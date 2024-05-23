@@ -1,24 +1,24 @@
 export class ConditionNode {
-    constructor(name, type, children = [],column1,column2,value=null) {
-        self.name = name;
-        self.type = type;
-        self.children = children;
-        self.column1 = column1;
-        self.column2 = column2;
-        self.value = value;
+    constructor({name, type, children = [],column1,column2,value=null}) {
+        this.name = name;
+        this.type = type;
+        this.children = children;
+        this.column1 = column1;
+        this.column2 = column2;
+        this.value = value;
     }
     
     addChild(child) {
-        self.children.push(child);
+        this.children.push(child);
     }
 
     addParent(parent) {
         if (parent != null) {
-            parent.addChild(self);
+            parent.addChild(this);
         }
     }
 
-    evaluateSelf(){
+    evaluatethis(){
         //Add code later
     }
 }
