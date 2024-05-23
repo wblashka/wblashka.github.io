@@ -2,36 +2,39 @@ import {ConditionNode} from './objects.js'
 
 let conditions = []; // Array to store conditions
 
-function loadCSV() {
-    var fileInput = document.getElementById('csvFile');
-    var file = fileInput.files[0];
-    if (!file) {
-        alert("Please select a CSV file to load.");
-        return;
-    }
+export function loadCSV() {
+    return new Promise((resolve, reject) => {
+        var fileInput = document.getElementById('csvFile');
+        var file = fileInput.files[0];
+        if (!file) {
+            alert("Please select a CSV file to load.");
+            reject("No file selected");
+        }
 
-    var reader = new FileReader();
+        var reader = new FileReader();
 
-    reader.onload = function(event) {
-        var csvData = event.target.result;
-        return csvData;
-    };
+        reader.onload = function(event) {
+            var csvData = event.target.result;
+            resolve(csvData);
+        };
 
-    reader.onerror = function() {
-        alert("Unable to read the CSV file.");
-    };
+        reader.onerror = function() {
+            alert("Unable to read the CSV file.");
+            reject("Error reading file");
+        };
 
-    reader.readAsText(file);
+        reader.readAsText(file);
+    });
 }
 
-function getCsvColumns(csvData) {
+export function getCsvColumns(csvData) {
     var lines = csvData.split('\n');
     var columns = lines[0].split(',');
     return(columns)
 }
 
-function updateColumnSelects() {
-    var csvData = loadCSV();
+export async function updateColumnSelects() {
+    var csvData = await loadCSV();
     var csvColumns = getCsvColumns(csvData);
 
     var columnSelect1 = document.getElementById('columnSelect1');
@@ -52,7 +55,7 @@ function updateColumnSelects() {
     });
 }
 
-function toggleValueField() {
+export function toggleValueField() {
     var valueField = document.getElementById('conditionValue');
     var conditionType = document.getElementById('conditionType');
 
@@ -64,13 +67,13 @@ function toggleValueField() {
     }
 }
 
-function setDefaultColumn2() {
+export function setDefaultColumn2() {
     var columnSelect1 = document.getElementById('columnSelect1');
     var columnSelect2 = document.getElementById('columnSelect2');
     columnSelect2.value = columnSelect1.value;
 }
 
-function addCondition() {
+export function addCondition() {
     var conditionName = document.getElementById('conditionName');
     var columnSelect1 = document.getElementById('columnSelect1');
     var columnSelect2 = document.getElementById('columnSelect2');
@@ -84,7 +87,7 @@ function addCondition() {
         alert("Please complete all fields to add a condition.");
         return;
     }
-
+    
     var newCondition = new ConditionNode({
         name: conditionName.value,
         type: conditionType.value,
@@ -97,27 +100,42 @@ function addCondition() {
     updateConditionDisplay();
 }
 
-function updateConditionDisplay() {
+export function updateConditionDisplay() {
     var conditionList = document.getElementById('conditionTree');
     conditionList.innerHTML = ''; // Clear existing list
-
     conditions.forEach(function(condition, index) {
         var conditionElement = document.createElement('div');
-        conditionElement.textContent = `Condition ${index + 1}: If column "${condition.column}" is "${condition.type}" to "${condition.value}"`;
+        conditionElement.classList.add('conditionElement');
+        conditionElement.textContent = `${condition.name}: Type: ${condition.type} ${condition.value} in ${condition.column1} and ${condition.column2}`;
+        conditionElement.addEventListener('click',function(){
+            // Remove highlighting from all conditionElements
+            document.querySelectorAll('.conditionElement').forEach(element => {
+                element.classList.remove('highlighted');
+            });
+            // Highlight the clicked conditionElement
+            conditionElement.classList.add('highlighted');
+
+            // Store the index of the clicked conditionNode
+            selectedConditionIndex = index;
+        });
         conditionList.appendChild(conditionElement);
     });
 }
 
-function saveProtocol() {
+export function saveProtocol() {
     // Logic to save the constructed protocol
     // This could involve converting the treeNodes array into a JSON object
 }
 
 // Additional functions for tree manipulation and UI updates
 
-// Attach functions to window object
-window.toggleValueField = toggleValueField;
-window.updateColumnSelects = updateColumnSelects;
-window.setDefaultColumn2 = setDefaultColumn2;
-window.addCondition = addCondition;
-window.saveProtocol = saveProtocol;
+// Add listeners
+document.getElementById('conditionType').addEventListener('change', toggleValueField);
+
+document.getElementById('loadFileButton').addEventListener('click', updateColumnSelects);
+
+document.getElementById('columnSelect1').addEventListener('change', setDefaultColumn2);
+
+document.getElementById('columnSelect1').addEventListener('change', setDefaultColumn2);
+
+document.getElementById('addConditionButton').addEventListener('click', addCondition);
