@@ -7,21 +7,21 @@
 }
 
 canvas {
-width: 100%;
-height: 100%;
-touch-action: none;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
 }
 
 .button {
-background-color: #e7e7e7; /* Gray */
-border: none;
-color: black;
-padding: 15px 32px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size: 16px;
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #e7e7e7; /* Gray */
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .button:hover {
@@ -36,4 +36,8 @@ background-color: white;
 .header {
     text-align: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.highlighted {
+    background-color: #ADD8E6;
 }
