@@ -121,5 +121,3 @@ window.updateColumnSelects = updateColumnSelects;
 window.setDefaultColumn2 = setDefaultColumn2;
 window.addCondition = addCondition;
 window.saveProtocol = saveProtocol;
-
-document.addEventListener("DOMContentLoaded", toggleValueField);
