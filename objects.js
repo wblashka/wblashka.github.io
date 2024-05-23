@@ -1,4 +1,4 @@
-class ConditionNode {
+export class ConditionNode {
     constructor(name, type, children = [],column1,column2,value=null) {
         self.name = name;
         self.type = type;
