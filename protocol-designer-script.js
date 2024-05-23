@@ -56,10 +56,11 @@ function toggleValueField() {
     var valueField = document.getElementById('conditionValue');
     var conditionType = document.getElementById('conditionType');
 
-    if (conditionType.value === 'equals'| conditionType.value === 'contains') {
-        valueField.style.display = 'block';
+    if (conditionType.value === 'Equals'| conditionType.value === 'Contains') {
+        valueField.hidden = false;
     } else {
-        valueField.style.display = 'none';
+        valueField.hidden = true;
+        valueField.value = '';
     }
 }
 
