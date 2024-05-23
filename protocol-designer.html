@@ -9,16 +9,19 @@
     <h1>Protocol Designer</h1>
     
     <input type="file" id="csvFile" accept=".csv" />
-    <button onclick="loadCSV()">Load CSV</button>
+    <button onclick="updateColumnSelect()">Load CSV</button>
     <div id="columns"></div>
 
     <div id="protocolBuilder">
         <h2>Create Conditions</h2>
+        <input type="text" id="conditionName" placeholder="Condition Name">
         <select id="columnSelect1" onchange="setDefaultColumn2()"></select>
         <select id="columnSelect2"></select>
-        <select id="conditionType">
+        <select id="conditionType" onchange="toggleValueField()">
             <option value="match">Match</option>
             <option value="mismatch">Mismatch</option>
+            <option value="equals">Equals</option>
+            <option value="contains">Contains</option>
             <!-- Add more condition types as needed -->
         </select>
         <input type="text" id="conditionValue" placeholder="Condition Value">

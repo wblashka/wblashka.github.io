@@ -1,5 +1,6 @@
+import Condition from objects.js
+
 let conditions = []; // Array to store conditions
-let treeNodes = []; // Array to store tree nodes
 
 function loadCSV() {
     var fileInput = document.getElementById('csvFile');
@@ -13,7 +14,7 @@ function loadCSV() {
 
     reader.onload = function(event) {
         var csvData = event.target.result;
-        processCSVData(csvData);
+        return csvData;
     };
 
     reader.onerror = function() {
@@ -23,16 +24,21 @@ function loadCSV() {
     reader.readAsText(file);
 }
 
-function processCSVData(csvData) {
+function getCsvColumns(csvData) {
     var lines = csvData.split('\n');
     var columns = lines[0].split(',');
+    return(columns)
+}
+
+function updateColumnSelects() {
+    var csvData = loadCSV();
+    var csvColumns = getCsvColumns(csvData);
 
     var columnSelect1 = document.getElementById('columnSelect1');
     var columnSelect2 = document.getElementById('columnSelect2');
     columnSelect1.innerHTML = ''; // Clear existing options
     columnSelect2.innerHTML = ''; // Clear existing options
-
-    columns.forEach(function(column) {
+    csvColumns.forEach(function(column) {
         var option1 = document.createElement('option');
         option1.value = column.trim();
         option1.textContent = column.trim();
@@ -46,6 +52,15 @@ function processCSVData(csvData) {
     });
 }
 
+function toggleValueField() {
+    var valueField = document.getElementById('conditionValue');
+    if (valueField.value === 'equals'| valueField.value === 'contains') {
+        valueField.style.display = 'block';
+    } else {
+        valueField.style.display = 'none';
+    }
+}
+
 function setDefaultColumn2() {
     var columnSelect1 = document.getElementById('columnSelect1');
     var columnSelect2 = document.getElementById('columnSelect2');
@@ -53,23 +68,28 @@ function setDefaultColumn2() {
 }
 
 function addCondition() {
+    var conditionName = document.getElementById('conditionName');
     var columnSelect1 = document.getElementById('columnSelect1');
     var columnSelect2 = document.getElementById('columnSelect2');
     var conditionType = document.getElementById('conditionType');
     var conditionValue = document.getElementById('conditionValue');
+    if (conditionType.value != "contains" && conditionType.value != "equals"){
+        conditionValue.value = null;
+    };
 
-    if (!columnSelect1.value || !columnSelect2.value || !conditionType.value || !conditionValue.value.trim()) {
+    if (!columnSelect1.value || !columnSelect2.value || !conditionType.value) {
         alert("Please complete all fields to add a condition.");
         return;
     }
 
-    var newCondition = {
+    var newCondition = new Condition({
+        name: conditionName.value,
+        type: conditionType.value,
         column1: columnSelect1.value,
         column2: columnSelect2.value,
-        type: conditionType.value,
-        value: conditionValue.value.trim()
-    };
-
+        value: conditionValue.value,
+    });
+    
     conditions.push(newCondition);
     updateConditionDisplay();
 }
@@ -83,12 +103,6 @@ function updateConditionDisplay() {
         conditionElement.textContent = `Condition ${index + 1}: If column "${condition.column}" is "${condition.type}" to "${condition.value}"`;
         conditionList.appendChild(conditionElement);
     });
-}
-
-function addTreeNode(type) {
-    // Create a new tree node of type 'AND' or 'OR'
-    // Add it to the treeNodes array
-    // Update the conditionTree display
 }
 
 function saveProtocol() {
