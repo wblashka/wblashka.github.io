@@ -1,4 +1,4 @@
-import Condition from 'objects.js'
+import Condition from './objects.js'
 
 let conditions = []; // Array to store conditions
 
