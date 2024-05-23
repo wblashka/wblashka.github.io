@@ -56,10 +56,10 @@ function toggleValueField() {
     var valueField = document.getElementById('conditionValue');
     var conditionType = document.getElementById('conditionType');
 
-    if (conditionType.value === 'Equals'| conditionType.value === 'Contains') {
-        valueField.hidden = false;
+    if (conditionType.value === 'equals'| conditionType.value === 'contains') {
+        valueField.style.display = 'inline-block';
     } else {
-        valueField.hidden = true;
+        valueField.style.display = 'none';
         valueField.value = '';
     }
 }
@@ -121,3 +121,5 @@ window.updateColumnSelects = updateColumnSelects;
 window.setDefaultColumn2 = setDefaultColumn2;
 window.addCondition = addCondition;
 window.saveProtocol = saveProtocol;
+
+document.addEventListener("DOMContentLoaded", toggleValueField);
