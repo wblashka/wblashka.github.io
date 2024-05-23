@@ -54,7 +54,9 @@ function updateColumnSelects() {
 
 function toggleValueField() {
     var valueField = document.getElementById('conditionValue');
-    if (valueField.value === 'equals'| valueField.value === 'contains') {
+    var conditionType = document.getElementById('conditionType');
+
+    if (conditionType.value === 'equals'| conditionType.value === 'contains') {
         valueField.style.display = 'block';
     } else {
         valueField.style.display = 'none';
