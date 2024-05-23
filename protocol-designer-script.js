@@ -1,4 +1,4 @@
-import {Condition} from './objects.js'
+import {ConditionNode} from './objects.js'
 
 let conditions = []; // Array to store conditions
 
@@ -84,7 +84,7 @@ function addCondition() {
         return;
     }
 
-    var newCondition = new Condition({
+    var newCondition = new ConditionNode({
         name: conditionName.value,
         type: conditionType.value,
         column1: columnSelect1.value,
