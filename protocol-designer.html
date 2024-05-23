@@ -6,20 +6,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <script type= "module" src="protocol-designer-script.js"></script>
+    
 
     <h1>Protocol Designer</h1>
     
     <input type="file" id="csvFile" accept=".csv" />
-    <button id="loadFileButton" onclick="updateColumnSelects()">Load CSV</button>
+    <button id="loadFileButton">Load CSV</button>
     <div id="columns"></div>
 
     <div id="protocolBuilder">
         <h2>Create Conditions</h2>
         <input type="text" id="conditionName" placeholder="Condition Name">
-        <select id="columnSelect1" onchange="setDefaultColumn2()"></select>
+        <select id="columnSelect1"></select>
         <select id="columnSelect2"></select>
-        <select id="conditionType" onchange="toggleValueField()">
+        <select id="conditionType">
             <option value="match">Match</option>
             <option value="mismatch">Mismatch</option>
             <option value="equals">Equals</option>
@@ -27,7 +27,7 @@
             <!-- Add more condition types as needed -->
         </select>
         <input type="text" id="conditionValue" placeholder="Condition Value" style="display:"none;">
-        <button onclick="addCondition()">Add Condition</button>
+        <button id="addConditionButton">Add Condition</button>
 
         <h2>Condition Tree</h2>
         <div id="conditionTree"></div>
@@ -35,5 +35,6 @@
         <button onclick="addTreeNode('OR')">Add OR Node</button>
         <button onclick="saveProtocol()">Save Protocol</button>
     </div>
+    <script type= "module" src="protocol-designer-script.js"></script>
 </body>
 </html>
