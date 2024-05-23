@@ -26,14 +26,14 @@
             <option value="contains">Contains</option>
             <!-- Add more condition types as needed -->
         </select>
-        <input type="text" id="conditionValue" placeholder="Condition Value" style="display:"none;">
+        <input type="text" id="conditionValue" placeholder="Condition Value" style="display:none;">
         <button id="addConditionButton">Add Condition</button>
 
         <h2>Condition Tree</h2>
         <div id="conditionTree"></div>
-        <button onclick="addTreeNode('AND')">Add AND Node</button>
-        <button onclick="addTreeNode('OR')">Add OR Node</button>
-        <button onclick="saveProtocol()">Save Protocol</button>
+        <button id="addAndButton"></button>Add AND Node</button>
+        <button id="addOrButton">Add OR Node</button>
+        <button id="saveProtocolButton">Save Protocol</button>
     </div>
     <script type= "module" src="protocol-designer-script.js"></script>
 </body>
