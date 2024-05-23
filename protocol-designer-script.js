@@ -89,7 +89,7 @@ function addCondition() {
         column2: columnSelect2.value,
         value: conditionValue.value,
     });
-    
+
     conditions.push(newCondition);
     updateConditionDisplay();
 }
@@ -111,3 +111,10 @@ function saveProtocol() {
 }
 
 // Additional functions for tree manipulation and UI updates
+
+// Attach functions to window object
+window.toggleValueField = toggleValueField;
+window.updateColumnSelects = updateColumnSelects;
+window.setDefaultColumn2 = setDefaultColumn2;
+window.addCondition = addCondition;
+window.saveProtocol = saveProtocol;
