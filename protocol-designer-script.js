@@ -1,8 +1,8 @@
 import {ConditionNode} from './objects.js'
 
 let conditions = []; // Array to store conditions
-let selectedConditionIndex = null; //Stores selected condition
 let uniqueIDs = []; //Array of used conidition IDs
+let draggedIndex = null;
 
 export function loadCSV() {
     return new Promise((resolve, reject) => {
@@ -111,7 +111,7 @@ export function updateConditionDisplay() {
         conditionElement.textContent = `${condition.name}: Type: ${condition.type} ${condition.value} in ${condition.column1} and ${condition.column2}`;
         conditionElement.classList.add('conditionElement');
         conditionElement.dataset.conditionID = condition.ID;
-        console.log(condition.ID);
+        conditionElement.id = condition.ID;
         //TEMPORARY FOR DEBUGGING:
         conditionElement.style.border = '2px solid red'
 
@@ -132,8 +132,8 @@ export function updateConditionDisplay() {
         
                 conditionElement.setAttribute('draggable', true);
         
-                // Store the index of the clicked conditionNode
-                selectedConditionIndex = conditions.indexOf(condition);
+                // // Store the index of the clicked conditionNode
+                // selectedConditionIndex = conditions.indexOf(condition);
         
                 // Prevent event propagation
                 event.stopPropagation();
@@ -143,8 +143,16 @@ export function updateConditionDisplay() {
 
         // Add dragstart event listener
         conditionElement.addEventListener('dragstart', function(event) {
+            if (conditionElement.classList.contains('highlighted')) {
+                const tempElement = document.createElement('div');
+            tempElement.textContent = 'Drop here to move to outside';
+            tempElement.id = 'temporaryConditionRoot';
+            tempElement.classList.add('conditionElement','tempElement');
+            document.getElementById('conditionTree').appendChild(tempElement);
+            }
+            
             // Set the data being dragged (in this case, the index of the condition)
-            event.dataTransfer.setData('text/plain', conditions.indexOf(condition));
+            event.dataTransfer.setData('text/plain', event.target.id);
             // Add a class to visually indicate the dragging
             conditionElement.classList.add('dragging');
         });
@@ -153,6 +161,7 @@ export function updateConditionDisplay() {
         conditionElement.addEventListener('dragend', function() {
             // Remove the class added during dragging
             conditionElement.classList.remove('dragging');
+            document.querySelectorAll('.tempElement').forEach((element) => {element.remove();});
         });
 
         return conditionElement;
@@ -177,23 +186,35 @@ export function updateConditionDisplay() {
     });
 }
 
-// Function to recursively find a ConditionNode by its unique identifier
-export function findConditionNodeByUniqueId(nodes, uniqueIdentifier) {
-    for (const node of nodes) {
-        if (node.ID === uniqueIdentifier) {
-            console.log(`Node ID: ${node.ID}`)
-            console.log(`Unique ID: ${uniqueIdentifier}`)
-            return node;
-        }
-        // If the node has children, recursively search through them
-        if (node.children.length > 0) {
-            const foundNode = findConditionNodeByUniqueId(node.children, uniqueIdentifier);
-            if (foundNode) {
-                return foundNode;
-            }
-        }
+export function getElementIndices(element, indices = []) {
+    // Recursive function to get the indices of the dropped element in the conditions array
+    
+    const parentElement = element.parentElement;
+
+    // Check if the parent element exists and is a conditionElement
+    if (parentElement && (parentElement.classList.contains('conditionElement') || parentElement.id === ('conditionTree'))) {
+        // Get the index of the dropped element with respect to its parent
+        const index = Array.from(parentElement.children).indexOf(element);
+        // Add the index to the list of indices
+        indices.unshift(index);
+        // Recursively call the function with the parent element
+        return getElementIndices(parentElement, indices);
+    } else {
+        // Return the collected indices when reaching the root
+        return indices;
     }
-    return null; // Return null if the node is not found
+}
+
+export function getConditionNodeByIndices(conditionList, indices) {
+    var condition = conditionList[indices.shift()]
+    if (indices.length === 0) {
+        return condition;
+    }
+    
+    for (const index of indices) {
+        condition = condition.children[index];
+    }
+    return condition;
 }
 
 export function addNode(nodeType) {
@@ -214,7 +235,7 @@ export function saveProtocol() {
     // This could involve converting the treeNodes array into a JSON object
 }
 
-// Additional functions for tree manipulation and UI updates
+
 
 // Add listeners
 document.getElementById('conditionType').addEventListener('change', toggleValueField);
@@ -234,28 +255,50 @@ document.addEventListener('dragover', function(event) {
 document.addEventListener('drop', function(event) {
     event.preventDefault(); // Prevent default behavior to avoid navigating away
 
-    // Get the index of the dragged conditionElement from the dataTransfer
-    const draggedIndex = event.dataTransfer.getData('text/plain');
-
-    // Find the conditionNode corresponding to the dropped conditionElement
+    // Find the conditionElement corresponding to the dropped conditionElement
     const droppedOnElement = event.target.closest('.conditionElement');
-    
+
     // Check if the dropped element has the 'conditionElement' class
-    if (!droppedOnElement || !droppedOnElement.classList.contains('conditionElement')) {
+    if (!droppedOnElement || !(droppedOnElement.classList.contains('conditionElement') || droppedOnElement.id === 'conditionTree')) {
         // If not, return early and do not proceed with the drop operation
         return;
     }
-    // Find the unique identifier of the dropped conditionElement
-    const uniqueIdentifier = droppedOnElement.dataset.conditionID;
-    console.log(conditions)
-    // Find the corresponding ConditionNode object in the conditions list hierarchy
-    const droppedOnConditionNode = findConditionNodeByUniqueId(conditions, uniqueIdentifier);
 
-    // Add dragged condition node as child of droppedConditionNode
-    droppedOnConditionNode.addChild(conditions[draggedIndex]);
+    // Get the dropped on condition
+    const droppedOnCondition = getConditionNodeByIndices(conditions, getElementIndices(droppedOnElement));
 
+
+    // Get the dragged condition
+    const draggedElementId = event.dataTransfer.getData('text/plain');
+    const draggedElement = document.getElementById(draggedElementId);
+    const draggedCondition = getConditionNodeByIndices(conditions, getElementIndices(draggedElement));
+
+    // Check if they are the same
+    if (droppedOnCondition === draggedCondition || draggedCondition.checkIfIsChild(droppedOnCondition)) {
+        return;
+    }
+
+    
+    // Get dragged child's index w.r.t old parent
+    const oldParent = draggedCondition.parent;
+    
+    // Add dragged condition as child of droppedOnCondition
+    if (droppedOnElement.id === 'temporaryConditionRoot') {
+        conditions.push(draggedCondition);
+        draggedCondition.removeParent();
+    } else{
+        droppedOnCondition.addChild(draggedCondition);
+    }
+    
     // Remove dragged element from list
-    conditions.splice(draggedIndex, 1);
+    if (oldParent) {
+            const childIndex = oldParent.children.indexOf(draggedCondition);
+            oldParent.children.splice(childIndex, 1);
+    } else {
+        conditions.splice(conditions.indexOf(draggedCondition),1);
+    }
+    
+    
 
     // Update the display
     updateConditionDisplay();
