@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Yenta Protocol Executor</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Execute Protocol on CSV</h1>
+
+        <div class="form-group">
+            <label for="csvFile">Upload CSV File:</label>
+            <input type="file" id="csvFile" accept=".csv">
+        </div>
+        <br/>
+        <div class="form-group">
+            <label for="protocolSelect">Select Protocol:</label>
+            <select id="protocolSelect">
+                <option value="">Select cached protocol...</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+            <button id="loadCachedProtocol">Load Selected Protocol</button>
+        </div>
+
+        <div class="form-group">
+            <label for="protocolUpload">Upload Protocol (JSON):</label>
+            <input type="file" id="protocolUpload" accept=".json">
+        </div>
+
+        <button id="executeButton">Execute Protocol</button>
+    </div>
+
+    <script type="module" src="yenta-executor.js"></script>
+</body>
+</html>

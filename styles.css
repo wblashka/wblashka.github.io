@@ -1,3 +1,14 @@
+/* 
+This whole stylesheet needs a ton of work.
+Finalize functional code base first and make it pretty later...
+To do:
+    - Remove fixed pixel measurements and make all sizing dynamically
+        calculated with reasonable min/max
+    - Make it actually look nice and come up with a consistent theme...
+    - Honestly just learn how the heck to make a pretty style sheet
+
+*/
+
 #renderContainer {
     width: 100%;
     height: 100vh; /* Use viewport height for full screen */
@@ -33,6 +44,27 @@ background-color: white;
     justify-content: center;
 }
 
+/* Context menu styling*/
+.context-menu {
+    background-color: white;
+    border: 1px solid black;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0;
+    width: 120px;
+    z-index: 1000;
+}
+
+.context-menu li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.context-menu li:hover {
+    background-color: #ddd;
+}
+/* End context menu styling*/
+
 .header {
     text-align: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -40,4 +72,22 @@ background-color: white;
 
 .highlighted {
     background-color: #ADD8E6;
+}
+
+/* Edit condition popup */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid black;
+    padding: 20px;
+    z-index: 1001;
+  }
+
+
+/* Edit protocol executor form*/
+.form-group {
+    margin-bottom: 15px;
 }

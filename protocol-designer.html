@@ -20,13 +20,9 @@
         <select id="columnSelect1"></select>
         <select id="columnSelect2"></select>
         <select id="conditionType">
-            <option value="match">Match</option>
-            <option value="mismatch">Mismatch</option>
-            <option value="equals">Equals</option>
-            <option value="bothContains">Both Contain</option>
-            <option value="oneContains">One Contains</option>
-            <!-- Add more condition types as needed -->
+            <!-- options are programmatically injected -->
         </select>
+        <input type="checkbox" id="conditionInverted">
         <input type="text" id="conditionValue" placeholder="Condition Value" style="display:none;">
         <button id="addConditionButton">Add Condition</button>
 
@@ -37,33 +33,29 @@
         <button id="saveProtocolButton">Save Protocol</button>
         <button id="editConditionButton" style="display: none;">Edit selected</button>
     </div>
-    <div id="editFormContainer" style="display: none;">
-        <label for="editConditionName">Condition Name:</label>
-        <input type="text" id="editConditionName">
-        <label for="editConditionType">Condition Type:</label>
-        <select id="editConditionType">
-            <option value="match">Match</option>
-            <option value="mismatch">Mismatch</option>
-            <option value="equals">Equals</option>
-            <option value="bothContains">Both Contain</option>
-            <option value="oneContains">One Contains</option>
-            <option value="and">And</option>
-            <option value="or">Or</option>
-            <!-- Add your condition types here -->
-        </select>
-        <label for="editColumnSelect1">Column 1:</label>
-        <select id="editColumnSelect1">
-            <!-- Add your column options here -->
-        </select>
-        <label for="editColumnSelect2">Column 2:</label>
-        <select id="editColumnSelect2">
-            <!-- Add your column options here -->
-        </select>
-        <label for="editConditionValue">Condition Value:</label>
-        <input type="text" id="editConditionValue">
-        <button id="saveEditButton">Save</button>
-        <button id="cancelEditButton">Cancel</button>
-    </div>
+    <div id="editConditionPopup" class="popup" style="display: none;">
+        <h3>Edit Condition</h3>
+        <h4 id="showEditConditionID"></h4>
+        <label>Name: <input type="text" id="editConditionName" /></label><br />
+        <label>Type: 
+          <select id="editConditionType">
+            <!-- options are programmatically injected -->
+          </select>
+        </label><br />
+        <label>Column 1: <select id="editColumn1"></select></label><br />
+        <label>Column 2: <select id="editColumn2"></select></label><br />
+        <label>Inverted: <input type="checkbox" id="conditionInverted"></label><br />
+        <label>Value: <input type="text" id="editConditionValue" /></label><br />
+        <button id="saveConditionChanges">Save</button>
+        <button id="cancelEditCondition">Cancel</button>
+      </div>
+
+    <!-- Context menu for right click -->
+    <ul id="rightClickContextMenu" class="context-menu" style="display: none;position: absolute;">
+        <li id="deleteCondition">Delete</li>
+        <li id="editCondition">Edit</li>
+    </ul>
+
     <script type= "module" src="protocol-designer-script.js"></script>
 </body>
 </html>
