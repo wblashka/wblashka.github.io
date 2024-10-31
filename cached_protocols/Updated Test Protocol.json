@@ -1,0 +1,177 @@
+[
+  {
+    "name": "OR: Match A or B",
+    "type": "or",
+    "children": [
+      {
+        "name": "OR: Match A",
+        "type": "or",
+        "children": [
+          {
+            "name": "Match A1 to A1",
+            "type": "match",
+            "children": [],
+            "column1": "A ALLELE 1",
+            "column2": "A ALLELE 1",
+            "value": "",
+            "ID": 4,
+            "invert": false
+          },
+          {
+            "name": "Match A1 to A2",
+            "type": "match",
+            "children": [],
+            "column1": "A ALLELE 1",
+            "column2": "A ALLELE 2",
+            "value": "",
+            "ID": 5,
+            "invert": false
+          },
+          {
+            "name": "Match A2 to A2",
+            "type": "match",
+            "children": [],
+            "column1": "A ALLELE 2",
+            "column2": "A ALLELE 2",
+            "value": "",
+            "ID": 6,
+            "invert": false
+          }
+        ],
+        "column1": "",
+        "column2": "",
+        "value": "",
+        "ID": 2,
+        "invert": false
+      },
+      {
+        "name": "OR: Match B",
+        "type": "or",
+        "children": [
+          {
+            "name": "Match B1 to B1",
+            "type": "match",
+            "children": [],
+            "column1": "B ALLELE 1",
+            "column2": "B ALLELE 1",
+            "value": "",
+            "ID": 7,
+            "invert": false
+          },
+          {
+            "name": "Match B1 to B2",
+            "type": "match",
+            "children": [],
+            "column1": "B ALLELE 1",
+            "column2": "B ALLELE 2",
+            "value": "",
+            "ID": 8,
+            "invert": false
+          },
+          {
+            "name": "Match B2 to B2",
+            "type": "match",
+            "children": [],
+            "column1": "B ALLELE 2",
+            "column2": "B ALLELE 2",
+            "value": "",
+            "ID": 9,
+            "invert": false
+          }
+        ],
+        "column1": "",
+        "column2": "",
+        "value": "",
+        "ID": 3,
+        "invert": false
+      }
+    ],
+    "column1": "",
+    "column2": "",
+    "value": "",
+    "ID": 0,
+    "invert": false
+  },
+  {
+    "name": "OR: Match DR1",
+    "type": "or",
+    "children": [
+      {
+        "name": "Match DR1 to DR1",
+        "type": "match",
+        "children": [],
+        "column1": "DRB1 ALLELE 1",
+        "column2": "DRB1 ALLELE 1",
+        "value": "",
+        "ID": 10,
+        "invert": false
+      },
+      {
+        "name": "Match DR1 to DR2",
+        "type": "match",
+        "children": [],
+        "column1": "DRB1 ALLELE 1",
+        "column2": "DRB1 ALLELE 2",
+        "value": "",
+        "ID": 11,
+        "invert": false
+      },
+      {
+        "name": "Match DR2 to DR2",
+        "type": "match",
+        "children": [],
+        "column1": "DRB1 ALLELE 2",
+        "column2": "DRB1 ALLELE 2",
+        "value": "",
+        "ID": 12,
+        "invert": false
+      }
+    ],
+    "column1": "",
+    "column2": "",
+    "value": "",
+    "ID": 1,
+    "invert": false
+  },
+  {
+    "name": "AND: Thymus vs Cord",
+    "type": "and",
+    "children": [
+      {
+        "name": "Mismatch Type",
+        "type": "mismatch",
+        "children": [],
+        "column1": "Type",
+        "column2": "Type",
+        "value": "",
+        "ID": 14,
+        "invert": false
+      },
+      {
+        "name": "One Thymus",
+        "type": "oneContains",
+        "children": [],
+        "column1": "Type",
+        "column2": "Type",
+        "value": "",
+        "ID": 15,
+        "invert": false
+      },
+      {
+        "name": "One Cord",
+        "type": "oneContains",
+        "children": [],
+        "column1": "Type",
+        "column2": "Type",
+        "value": "",
+        "ID": 16,
+        "invert": false
+      }
+    ],
+    "column1": "",
+    "column2": "",
+    "value": "",
+    "ID": 13,
+    "invert": false
+  }
+]

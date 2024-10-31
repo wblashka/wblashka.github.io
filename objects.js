@@ -81,9 +81,9 @@ export class ConditionNode {
                 break;
 
             case 'oneContains':
-                // One of the rows' column values must contain the specified value
-                result = row1[this.column1].includes(this.value) || 
-                         row2[this.column1].includes(this.value);
+                // Ensure non-empty values are used in the contains check
+                result = (row1[this.column1] && row1[this.column1].includes(this.value)) ||
+                            (row2[this.column1] && row2[this.column1].includes(this.value));
                 break;
 
             case 'equals':
@@ -96,6 +96,17 @@ export class ConditionNode {
         }
 
         // Apply inversion if needed
-        return this.invert ? !result : result;
+        let final_result = this.invert ? !result : result;
+        // if (final_result) {
+        //     console.log(`Evaluating... \n
+        //         Entire Row 1: ${row1["Sample"]}\n
+        //         Entire Row 2: ${row2["Sample"]}\n
+        //         Row 1 Value: ${row1[this.column1]}\n
+        //         Row 2 Value: ${row2[this.column2]}\n
+        //         Type: ${this.type}\n
+        //         Result: ${final_result}`)
+        // }
+        
+        return final_result;
     }
 }

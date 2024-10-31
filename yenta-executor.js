@@ -8,7 +8,7 @@ Github pages limits dynamically accessing files, so this must be manually
 updated with new protocols as necessary, but only here in this list as they
 are uploaded.
 */
-const cachedProtocols = ['Hu Mouse Match Protocol.json']
+const cachedProtocols = ['Hu Mouse Match Protocol.json', 'Updated Test Protocol.json']
 let CSV_DATA = null;
 let conditions = null;
 
@@ -49,6 +49,36 @@ export function loadCSV() {
 
         reader.readAsText(file);
     });
+}
+
+function parseCSV(csvData) {
+    const rows = [];
+    let inQuotes = false;
+    let row = [];
+    let cell = "";
+
+    for (let i = 0; i < csvData.length; i++) {
+        const char = csvData[i];
+
+        if (char === '"' && (i === 0 || csvData[i - 1] !== "\\")) {
+            inQuotes = !inQuotes; // Toggle the inQuotes flag
+        } else if (char === ',' && !inQuotes) {
+            row.push(cell.trim());
+            cell = "";
+        } else if (char === '\n' && !inQuotes) {
+            row.push(cell.trim());
+            rows.push(row);
+            row = [];
+            cell = "";
+        } else {
+            cell += char; // Append character to the current cell
+        }
+    }
+
+    if (cell) row.push(cell.trim()); // Add the last cell
+    if (row.length) rows.push(row);  // Add the last row if not empty
+
+    return rows;
 }
 
 function parseProtocol(jsonString) {
@@ -103,13 +133,10 @@ function loadCachedProtocol() {
 }
 
 function evaluateProtocolOnCSV(conditions, csvData) {
-    const rows = csvData.split('\n').map(function(line) {
-        return line.split(',').map(function(cell) {
-            return cell.trim();
-        });
-    });
+    const rows = parseCSV(csvData);
 
     const headers = rows[0]; // Extract headers from first row
+    console.log("Parsed Headers:", headers); // Debugging output for headers
     const data = rows.slice(1); // Remaining data after removing headers
 
     // Define helper function to map column names to values
