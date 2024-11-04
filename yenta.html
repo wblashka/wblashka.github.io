@@ -1,37 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Yenta Protocol Executor</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Execute Protocol on CSV</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles.css" />
+        <title>Yenta Protocol Executor</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Execute Protocol on CSV</h1>
 
-        <div class="form-group">
-            <label for="csvFile">Upload CSV File:</label>
-            <input type="file" id="csvFile" accept=".csv">
+            <div class="form-group">
+                <label for="csvFile">Upload CSV File:</label>
+                <input type="file" id="csvFile" accept=".csv" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="protocolSelect">Select Protocol:</label>
+                <select id="protocolSelect">
+                    <option value="">Select cached protocol...</option>
+                    <!-- Options will be populated dynamically -->
+                </select>
+                <button id="loadCachedProtocol">Load Selected Protocol</button>
+                <span id="loadedIndicator" style="display: none">✅</span>
+            </div>
+
+            <div class="form-group">
+                <label for="protocolUpload">Upload Protocol (JSON):</label>
+                <input type="file" id="protocolUpload" accept=".json" />
+            </div>
+
+            <button id="executeButton">Execute Protocol</button>
         </div>
-        <br/>
-        <div class="form-group">
-            <label for="protocolSelect">Select Protocol:</label>
-            <select id="protocolSelect">
-                <option value="">Select cached protocol...</option>
-                <!-- Options will be populated dynamically -->
-            </select>
-            <button id="loadCachedProtocol">Load Selected Protocol</button>
+        <div id="matchTableContainer">
+            <h3>Match Results</h3>
+            <label for="primaryDisplaySelect">Select Display Field</label>
+            <select id="primaryDisplaySelect"></select>
+            <label for="separatorSelect">Select Separator</label>
+            <select id="separatorSelect"></select>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search matches..."
+            />
+            <table id="matchTable">
+                <thead>
+                    <tr id="tableHeaderRow"></tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
         </div>
 
-        <div class="form-group">
-            <label for="protocolUpload">Upload Protocol (JSON):</label>
-            <input type="file" id="protocolUpload" accept=".json">
-        </div>
-
-        <button id="executeButton">Execute Protocol</button>
-    </div>
-
-    <script type="module" src="yenta-executor.js"></script>
-</body>
+        <script type="module" src="yenta-executor.js"></script>
+    </body>
 </html>
